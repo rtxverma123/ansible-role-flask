@@ -1,0 +1,17 @@
+---
+# tasks file for flask_webserver
+- name: Install Flask
+  yum: 
+    name: {{ item }} 
+    state: present
+    with_items:
+        - flask
+        - flask-mysql
+- name: Copy server code
+  copy: 
+    src: app.py 
+    dest: /opt/app.py
+     
+- name: Run Flask APP
+  shell: 
+    FLASK_APP: /opt/app.py nohup flask run --host=0.0.0.0 &
